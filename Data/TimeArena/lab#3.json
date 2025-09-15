@@ -1,0 +1,883 @@
+[
+    {
+        "id": 0,
+        "tasks": [
+            "lab1",
+            "lab2",
+            "lab3"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare heated solution in test tube.**\n**Task Prepare a mixture of sulfuric acid and sodium.**\n**Task Prepare a ferrous sulfate solution using a magnetic stirrer.**\nValid Actions with time required for completion:\n- wash test_tube: 4 minutes\n- add solution to test_tube: 4 minutes\n- heat test_tube: 5 minutes\n- wash beaker: 3 minutes\n- find sulfuric_acid: 1 minutes\n- find sodium_flakes: 1 minutes\n- dilute sulfuric_acid: 3 minutes\n- cut sodium_flakes: 2 minutes\n- add sulfuric_acid to beaker: 2 minutes\n- heat sodium_flakes: 5 minutes\n- add sodium_flakes to beaker: 2 minutes\n- pick magnetic_stirrer: 4 minutes\n- pick ferrous_sulfate: 2 minutes\n- wash beaker: 1 minutes\n- dissolve ferrous_sulfate in beaker: 6 minutes\n- stir solution with magnetic_stirrer: 3 minutes\n",
+        "dependency_graph": {
+            "lab1": [
+                {
+                    "wash test_tube": 4,
+                    "add solution to test_tube": 4,
+                    "heat test_tube*": 5
+                },
+                {
+                    "add solution to test_tube": [
+                        "wash test_tube"
+                    ],
+                    "heat test_tube*": [
+                        "add solution to test_tube"
+                    ]
+                }
+            ],
+            "lab2": [
+                {
+                    "wash beaker": 3,
+                    "find sulfuric_acid": 1,
+                    "find sodium_flakes": 1,
+                    "dilute sulfuric_acid": 3,
+                    "cut sodium_flakes": 2,
+                    "add sulfuric_acid to beaker": 2,
+                    "heat sodium_flakes*": 5,
+                    "add sodium_flakes to beaker": 2
+                },
+                {
+                    "dilute sulfuric_acid": [
+                        "find sulfuric_acid"
+                    ],
+                    "cut sodium_flakes": [
+                        "find sodium_flakes"
+                    ],
+                    "add sulfuric_acid to beaker": [
+                        "dilute sulfuric_acid",
+                        "wash beaker"
+                    ],
+                    "heat sodium_flakes*": [
+                        "cut sodium_flakes"
+                    ],
+                    "add sodium_flakes to beaker": [
+                        "heat sodium_flakes*",
+                        "wash beaker"
+                    ]
+                }
+            ],
+            "lab3": [
+                {
+                    "pick magnetic_stirrer": 4,
+                    "pick ferrous_sulfate": 2,
+                    "wash beaker": 1,
+                    "dissolve ferrous_sulfate in beaker*": 6,
+                    "stir solution with magnetic_stirrer": 3
+                },
+                {
+                    "dissolve ferrous_sulfate in beaker*": [
+                        "pick ferrous_sulfate",
+                        "wash beaker"
+                    ],
+                    "stir solution with magnetic_stirrer": [
+                        "pick magnetic_stirrer",
+                        "dissolve ferrous_sulfate in beaker*"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 1,
+        "tasks": [
+            "lab2",
+            "lab3",
+            "lab4"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare a mixture of sulfuric acid and sodium.**\n**Task Prepare a ferrous sulfate solution using a magnetic stirrer.**\n**Task Perform a chemical reaction between iron and copper sulfate to create a copper-coated iron nail.**\nValid Actions with time required for completion:\n- wash beaker: 3 minutes\n- find sulfuric_acid: 1 minutes\n- find sodium_flakes: 1 minutes\n- dilute sulfuric_acid: 3 minutes\n- cut sodium_flakes: 2 minutes\n- add sulfuric_acid to beaker: 2 minutes\n- heat sodium_flakes: 5 minutes\n- add sodium_flakes to beaker: 2 minutes\n- pick magnetic_stirrer: 4 minutes\n- pick ferrous_sulfate: 2 minutes\n- wash beaker: 1 minutes\n- dissolve ferrous_sulfate in beaker: 6 minutes\n- stir solution with magnetic_stirrer: 3 minutes\n- find copper_sulfate_solution: 1 minutes\n- dilute copper_sulfate_solution: 3 minutes\n- pick iron_nail: 2 minutes\n- polish iron_nail: 6 minutes\n- soak iron_nail in copper_sulfate_solution: 7 minutes\n",
+        "dependency_graph": {
+            "lab2": [
+                {
+                    "wash beaker": 3,
+                    "find sulfuric_acid": 1,
+                    "find sodium_flakes": 1,
+                    "dilute sulfuric_acid": 3,
+                    "cut sodium_flakes": 2,
+                    "add sulfuric_acid to beaker": 2,
+                    "heat sodium_flakes*": 5,
+                    "add sodium_flakes to beaker": 2
+                },
+                {
+                    "dilute sulfuric_acid": [
+                        "find sulfuric_acid"
+                    ],
+                    "cut sodium_flakes": [
+                        "find sodium_flakes"
+                    ],
+                    "add sulfuric_acid to beaker": [
+                        "dilute sulfuric_acid",
+                        "wash beaker"
+                    ],
+                    "heat sodium_flakes*": [
+                        "cut sodium_flakes"
+                    ],
+                    "add sodium_flakes to beaker": [
+                        "heat sodium_flakes*",
+                        "wash beaker"
+                    ]
+                }
+            ],
+            "lab3": [
+                {
+                    "pick magnetic_stirrer": 4,
+                    "pick ferrous_sulfate": 2,
+                    "wash beaker": 1,
+                    "dissolve ferrous_sulfate in beaker*": 6,
+                    "stir solution with magnetic_stirrer": 3
+                },
+                {
+                    "dissolve ferrous_sulfate in beaker*": [
+                        "pick ferrous_sulfate",
+                        "wash beaker"
+                    ],
+                    "stir solution with magnetic_stirrer": [
+                        "pick magnetic_stirrer",
+                        "dissolve ferrous_sulfate in beaker*"
+                    ]
+                }
+            ],
+            "lab4": [
+                {
+                    "find copper_sulfate_solution": 1,
+                    "dilute copper_sulfate_solution": 3,
+                    "pick iron_nail": 2,
+                    "polish iron_nail": 6,
+                    "soak iron_nail in copper_sulfate_solution*": 7
+                },
+                {
+                    "dilute copper_sulfate_solution": [
+                        "find copper_sulfate_solution"
+                    ],
+                    "polish iron_nail": [
+                        "pick iron_nail"
+                    ],
+                    "soak iron_nail in copper_sulfate_solution*": [
+                        "dilute copper_sulfate_solution",
+                        "polish iron_nail"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 2,
+        "tasks": [
+            "lab3",
+            "lab4",
+            "lab5"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare a ferrous sulfate solution using a magnetic stirrer.**\n**Task Perform a chemical reaction between iron and copper sulfate to create a copper-coated iron nail.**\n**Task Perform an experiment with disolved sodium hydroxide and heated aluminum.**\nValid Actions with time required for completion:\n- pick magnetic_stirrer: 4 minutes\n- pick ferrous_sulfate: 2 minutes\n- wash beaker: 1 minutes\n- dissolve ferrous_sulfate in beaker: 6 minutes\n- stir solution with magnetic_stirrer: 3 minutes\n- find copper_sulfate_solution: 1 minutes\n- dilute copper_sulfate_solution: 3 minutes\n- pick iron_nail: 2 minutes\n- polish iron_nail: 6 minutes\n- soak iron_nail in copper_sulfate_solution: 7 minutes\n- wash beaker: 1 minutes\n- find sodium_hydroxide: 1 minutes\n- pick aluminum_foil: 2 minutes\n- dissolve sodium_hydroxide in beaker: 6 minutes\n- cut aluminum_foil: 2 minutes\n- heat aluminum_foil: 5 minutes\n- add aluminum_foil to beaker: 2 minutes\n",
+        "dependency_graph": {
+            "lab3": [
+                {
+                    "pick magnetic_stirrer": 4,
+                    "pick ferrous_sulfate": 2,
+                    "wash beaker": 1,
+                    "dissolve ferrous_sulfate in beaker*": 6,
+                    "stir solution with magnetic_stirrer": 3
+                },
+                {
+                    "dissolve ferrous_sulfate in beaker*": [
+                        "pick ferrous_sulfate",
+                        "wash beaker"
+                    ],
+                    "stir solution with magnetic_stirrer": [
+                        "pick magnetic_stirrer",
+                        "dissolve ferrous_sulfate in beaker*"
+                    ]
+                }
+            ],
+            "lab4": [
+                {
+                    "find copper_sulfate_solution": 1,
+                    "dilute copper_sulfate_solution": 3,
+                    "pick iron_nail": 2,
+                    "polish iron_nail": 6,
+                    "soak iron_nail in copper_sulfate_solution*": 7
+                },
+                {
+                    "dilute copper_sulfate_solution": [
+                        "find copper_sulfate_solution"
+                    ],
+                    "polish iron_nail": [
+                        "pick iron_nail"
+                    ],
+                    "soak iron_nail in copper_sulfate_solution*": [
+                        "dilute copper_sulfate_solution",
+                        "polish iron_nail"
+                    ]
+                }
+            ],
+            "lab5": [
+                {
+                    "wash beaker": 1,
+                    "find sodium_hydroxide": 1,
+                    "pick aluminum_foil": 2,
+                    "dissolve sodium_hydroxide in beaker*": 6,
+                    "cut aluminum_foil": 2,
+                    "heat aluminum_foil*": 5,
+                    "add aluminum_foil to beaker": 2
+                },
+                {
+                    "dissolve sodium_hydroxide in beaker*": [
+                        "find sodium_hydroxide",
+                        "wash beaker"
+                    ],
+                    "cut aluminum_foil": [
+                        "pick aluminum_foil"
+                    ],
+                    "heat aluminum_foil*": [
+                        "cut aluminum_foil"
+                    ],
+                    "add aluminum_foil to beaker": [
+                        "heat aluminum_foil*",
+                        "dissolve sodium_hydroxide in beaker*"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 3,
+        "tasks": [
+            "lab4",
+            "lab5",
+            "lab6"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Perform a chemical reaction between iron and copper sulfate to create a copper-coated iron nail.**\n**Task Perform an experiment with disolved sodium hydroxide and heated aluminum.**\n**Task Prepare a diluted nitric acid and zinc mixture.**\nValid Actions with time required for completion:\n- find copper_sulfate_solution: 1 minutes\n- dilute copper_sulfate_solution: 3 minutes\n- pick iron_nail: 2 minutes\n- polish iron_nail: 6 minutes\n- soak iron_nail in copper_sulfate_solution: 7 minutes\n- wash beaker: 1 minutes\n- find sodium_hydroxide: 1 minutes\n- pick aluminum_foil: 2 minutes\n- dissolve sodium_hydroxide in beaker: 6 minutes\n- cut aluminum_foil: 2 minutes\n- heat aluminum_foil: 5 minutes\n- add aluminum_foil to beaker: 2 minutes\n- wash beaker: 1 minutes\n- find nitric_acid: 1 minutes\n- dilute nitric_acid: 4 minutes\n- add nitric_acid to beaker: 2 minutes\n- pick zinc_pellet: 1 minutes\n- crush zinc_pellet: 2 minutes\n- heat zinc_pellet: 5 minutes\n- add zinc_pellet to beaker: 2 minutes\n",
+        "dependency_graph": {
+            "lab4": [
+                {
+                    "find copper_sulfate_solution": 1,
+                    "dilute copper_sulfate_solution": 3,
+                    "pick iron_nail": 2,
+                    "polish iron_nail": 6,
+                    "soak iron_nail in copper_sulfate_solution*": 7
+                },
+                {
+                    "dilute copper_sulfate_solution": [
+                        "find copper_sulfate_solution"
+                    ],
+                    "polish iron_nail": [
+                        "pick iron_nail"
+                    ],
+                    "soak iron_nail in copper_sulfate_solution*": [
+                        "dilute copper_sulfate_solution",
+                        "polish iron_nail"
+                    ]
+                }
+            ],
+            "lab5": [
+                {
+                    "wash beaker": 1,
+                    "find sodium_hydroxide": 1,
+                    "pick aluminum_foil": 2,
+                    "dissolve sodium_hydroxide in beaker*": 6,
+                    "cut aluminum_foil": 2,
+                    "heat aluminum_foil*": 5,
+                    "add aluminum_foil to beaker": 2
+                },
+                {
+                    "dissolve sodium_hydroxide in beaker*": [
+                        "find sodium_hydroxide",
+                        "wash beaker"
+                    ],
+                    "cut aluminum_foil": [
+                        "pick aluminum_foil"
+                    ],
+                    "heat aluminum_foil*": [
+                        "cut aluminum_foil"
+                    ],
+                    "add aluminum_foil to beaker": [
+                        "heat aluminum_foil*",
+                        "dissolve sodium_hydroxide in beaker*"
+                    ]
+                }
+            ],
+            "lab6": [
+                {
+                    "wash beaker": 1,
+                    "find nitric_acid": 1,
+                    "dilute nitric_acid": 4,
+                    "add nitric_acid to beaker": 2,
+                    "pick zinc_pellet": 1,
+                    "crush zinc_pellet": 2,
+                    "heat zinc_pellet*": 5,
+                    "add zinc_pellet to beaker": 2
+                },
+                {
+                    "dilute nitric_acid": [
+                        "find nitric_acid"
+                    ],
+                    "add nitric_acid to beaker": [
+                        "dilute nitric_acid",
+                        "wash beaker"
+                    ],
+                    "crush zinc_pellet": [
+                        "pick zinc_pellet"
+                    ],
+                    "heat zinc_pellet*": [
+                        "crush zinc_pellet"
+                    ],
+                    "add zinc_pellet to beaker": [
+                        "heat zinc_pellet*",
+                        "wash beaker"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 4,
+        "tasks": [
+            "lab5",
+            "lab6",
+            "lab7"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Perform an experiment with disolved sodium hydroxide and heated aluminum.**\n**Task Prepare a diluted nitric acid and zinc mixture.**\n**Task Find all chemicals to synthesize ethyl acetate by heating, cooling and drying.**\nValid Actions with time required for completion:\n- wash beaker: 1 minutes\n- find sodium_hydroxide: 1 minutes\n- pick aluminum_foil: 2 minutes\n- dissolve sodium_hydroxide in beaker: 6 minutes\n- cut aluminum_foil: 2 minutes\n- heat aluminum_foil: 5 minutes\n- add aluminum_foil to beaker: 2 minutes\n- wash beaker: 1 minutes\n- find nitric_acid: 1 minutes\n- dilute nitric_acid: 4 minutes\n- add nitric_acid to beaker: 2 minutes\n- pick zinc_pellet: 1 minutes\n- crush zinc_pellet: 2 minutes\n- heat zinc_pellet: 5 minutes\n- add zinc_pellet to beaker: 2 minutes\n- wash beaker: 1 minutes\n- find ethanol: 1 minutes\n- find acetic_acid: 1 minutes\n- find catalyst: 1 minutes\n- add ethanol to beaker: 1 minutes\n- add acetic_acid to beaker: 2 minutes\n- add catalyst to beaker: 2 minutes\n- heat beaker: 6 minutes\n- cool beaker: 5 minutes\n- dry beaker: 4 minutes\n",
+        "dependency_graph": {
+            "lab5": [
+                {
+                    "wash beaker": 1,
+                    "find sodium_hydroxide": 1,
+                    "pick aluminum_foil": 2,
+                    "dissolve sodium_hydroxide in beaker*": 6,
+                    "cut aluminum_foil": 2,
+                    "heat aluminum_foil*": 5,
+                    "add aluminum_foil to beaker": 2
+                },
+                {
+                    "dissolve sodium_hydroxide in beaker*": [
+                        "find sodium_hydroxide",
+                        "wash beaker"
+                    ],
+                    "cut aluminum_foil": [
+                        "pick aluminum_foil"
+                    ],
+                    "heat aluminum_foil*": [
+                        "cut aluminum_foil"
+                    ],
+                    "add aluminum_foil to beaker": [
+                        "heat aluminum_foil*",
+                        "dissolve sodium_hydroxide in beaker*"
+                    ]
+                }
+            ],
+            "lab6": [
+                {
+                    "wash beaker": 1,
+                    "find nitric_acid": 1,
+                    "dilute nitric_acid": 4,
+                    "add nitric_acid to beaker": 2,
+                    "pick zinc_pellet": 1,
+                    "crush zinc_pellet": 2,
+                    "heat zinc_pellet*": 5,
+                    "add zinc_pellet to beaker": 2
+                },
+                {
+                    "dilute nitric_acid": [
+                        "find nitric_acid"
+                    ],
+                    "add nitric_acid to beaker": [
+                        "dilute nitric_acid",
+                        "wash beaker"
+                    ],
+                    "crush zinc_pellet": [
+                        "pick zinc_pellet"
+                    ],
+                    "heat zinc_pellet*": [
+                        "crush zinc_pellet"
+                    ],
+                    "add zinc_pellet to beaker": [
+                        "heat zinc_pellet*",
+                        "wash beaker"
+                    ]
+                }
+            ],
+            "lab7": [
+                {
+                    "wash beaker": 1,
+                    "find ethanol": 1,
+                    "find acetic_acid": 1,
+                    "find catalyst": 1,
+                    "add ethanol to beaker": 1,
+                    "add acetic_acid to beaker": 2,
+                    "add catalyst to beaker": 2,
+                    "heat beaker*": 6,
+                    "cool beaker*": 5,
+                    "dry beaker*": 4
+                },
+                {
+                    "add ethanol to beaker": [
+                        "find ethanol",
+                        "wash beaker"
+                    ],
+                    "add acetic_acid to beaker": [
+                        "find acetic_acid",
+                        "wash beaker"
+                    ],
+                    "add catalyst to beaker": [
+                        "find catalyst",
+                        "wash beaker"
+                    ],
+                    "heat beaker*": [
+                        "add catalyst to beaker",
+                        "add acetic_acid to beaker",
+                        "add ethanol to beaker"
+                    ],
+                    "cool beaker*": [
+                        "heat beaker*"
+                    ],
+                    "dry beaker*": [
+                        "cool beaker*"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 5,
+        "tasks": [
+            "lab6",
+            "lab7",
+            "lab8"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare a diluted nitric acid and zinc mixture.**\n**Task Find all chemicals to synthesize ethyl acetate by heating, cooling and drying.**\n**Task Perform a pH test on salt solution and label the salt.**\nValid Actions with time required for completion:\n- wash beaker: 1 minutes\n- find nitric_acid: 1 minutes\n- dilute nitric_acid: 4 minutes\n- add nitric_acid to beaker: 2 minutes\n- pick zinc_pellet: 1 minutes\n- crush zinc_pellet: 2 minutes\n- heat zinc_pellet: 5 minutes\n- add zinc_pellet to beaker: 2 minutes\n- wash beaker: 1 minutes\n- find ethanol: 1 minutes\n- find acetic_acid: 1 minutes\n- find catalyst: 1 minutes\n- add ethanol to beaker: 1 minutes\n- add acetic_acid to beaker: 2 minutes\n- add catalyst to beaker: 2 minutes\n- heat beaker: 6 minutes\n- cool beaker: 5 minutes\n- dry beaker: 4 minutes\n- pick salt: 1 minutes\n- wash test_tube: 3 minutes\n- dissolve salt in test_tube: 8 minutes\n- pick ph_paper: 1 minutes\n- put ph_paper in test_tube: 3 minutes\n- label salt: 1 minutes\n",
+        "dependency_graph": {
+            "lab6": [
+                {
+                    "wash beaker": 1,
+                    "find nitric_acid": 1,
+                    "dilute nitric_acid": 4,
+                    "add nitric_acid to beaker": 2,
+                    "pick zinc_pellet": 1,
+                    "crush zinc_pellet": 2,
+                    "heat zinc_pellet*": 5,
+                    "add zinc_pellet to beaker": 2
+                },
+                {
+                    "dilute nitric_acid": [
+                        "find nitric_acid"
+                    ],
+                    "add nitric_acid to beaker": [
+                        "dilute nitric_acid",
+                        "wash beaker"
+                    ],
+                    "crush zinc_pellet": [
+                        "pick zinc_pellet"
+                    ],
+                    "heat zinc_pellet*": [
+                        "crush zinc_pellet"
+                    ],
+                    "add zinc_pellet to beaker": [
+                        "heat zinc_pellet*",
+                        "wash beaker"
+                    ]
+                }
+            ],
+            "lab7": [
+                {
+                    "wash beaker": 1,
+                    "find ethanol": 1,
+                    "find acetic_acid": 1,
+                    "find catalyst": 1,
+                    "add ethanol to beaker": 1,
+                    "add acetic_acid to beaker": 2,
+                    "add catalyst to beaker": 2,
+                    "heat beaker*": 6,
+                    "cool beaker*": 5,
+                    "dry beaker*": 4
+                },
+                {
+                    "add ethanol to beaker": [
+                        "find ethanol",
+                        "wash beaker"
+                    ],
+                    "add acetic_acid to beaker": [
+                        "find acetic_acid",
+                        "wash beaker"
+                    ],
+                    "add catalyst to beaker": [
+                        "find catalyst",
+                        "wash beaker"
+                    ],
+                    "heat beaker*": [
+                        "add catalyst to beaker",
+                        "add acetic_acid to beaker",
+                        "add ethanol to beaker"
+                    ],
+                    "cool beaker*": [
+                        "heat beaker*"
+                    ],
+                    "dry beaker*": [
+                        "cool beaker*"
+                    ]
+                }
+            ],
+            "lab8": [
+                {
+                    "pick salt": 1,
+                    "wash test_tube": 3,
+                    "dissolve salt in test_tube*": 8,
+                    "pick ph_paper": 1,
+                    "put ph_paper in test_tube": 3,
+                    "label salt": 1
+                },
+                {
+                    "dissolve salt in test_tube*": [
+                        "pick salt",
+                        "wash test_tube"
+                    ],
+                    "put ph_paper in test_tube": [
+                        "dissolve salt in test_tube*",
+                        "pick ph_paper"
+                    ],
+                    "label salt": [
+                        "put ph_paper in test_tube"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 6,
+        "tasks": [
+            "lab7",
+            "lab8",
+            "lab9"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Find all chemicals to synthesize ethyl acetate by heating, cooling and drying.**\n**Task Perform a pH test on salt solution and label the salt.**\n**Task Add chemicals to beaker and synthesize benzaldehyde by heating, cooling and drying.**\nValid Actions with time required for completion:\n- wash beaker: 1 minutes\n- find ethanol: 1 minutes\n- find acetic_acid: 1 minutes\n- find catalyst: 1 minutes\n- add ethanol to beaker: 1 minutes\n- add acetic_acid to beaker: 2 minutes\n- add catalyst to beaker: 2 minutes\n- heat beaker: 6 minutes\n- cool beaker: 5 minutes\n- dry beaker: 4 minutes\n- pick salt: 1 minutes\n- wash test_tube: 3 minutes\n- dissolve salt in test_tube: 8 minutes\n- pick ph_paper: 1 minutes\n- put ph_paper in test_tube: 3 minutes\n- label salt: 1 minutes\n- find benzyl_alcohol: 2 minutes\n- find oxidizing_agent: 1 minutes\n- wash beaker: 1 minutes\n- add benzyl_alcohol to beaker: 3 minutes\n- add oxidizing_agent to beaker: 3 minutes\n- heat beaker: 5 minutes\n- cool beaker: 1 minutes\n- dry beaker: 4 minutes\n",
+        "dependency_graph": {
+            "lab7": [
+                {
+                    "wash beaker": 1,
+                    "find ethanol": 1,
+                    "find acetic_acid": 1,
+                    "find catalyst": 1,
+                    "add ethanol to beaker": 1,
+                    "add acetic_acid to beaker": 2,
+                    "add catalyst to beaker": 2,
+                    "heat beaker*": 6,
+                    "cool beaker*": 5,
+                    "dry beaker*": 4
+                },
+                {
+                    "add ethanol to beaker": [
+                        "find ethanol",
+                        "wash beaker"
+                    ],
+                    "add acetic_acid to beaker": [
+                        "find acetic_acid",
+                        "wash beaker"
+                    ],
+                    "add catalyst to beaker": [
+                        "find catalyst",
+                        "wash beaker"
+                    ],
+                    "heat beaker*": [
+                        "add catalyst to beaker",
+                        "add acetic_acid to beaker",
+                        "add ethanol to beaker"
+                    ],
+                    "cool beaker*": [
+                        "heat beaker*"
+                    ],
+                    "dry beaker*": [
+                        "cool beaker*"
+                    ]
+                }
+            ],
+            "lab8": [
+                {
+                    "pick salt": 1,
+                    "wash test_tube": 3,
+                    "dissolve salt in test_tube*": 8,
+                    "pick ph_paper": 1,
+                    "put ph_paper in test_tube": 3,
+                    "label salt": 1
+                },
+                {
+                    "dissolve salt in test_tube*": [
+                        "pick salt",
+                        "wash test_tube"
+                    ],
+                    "put ph_paper in test_tube": [
+                        "dissolve salt in test_tube*",
+                        "pick ph_paper"
+                    ],
+                    "label salt": [
+                        "put ph_paper in test_tube"
+                    ]
+                }
+            ],
+            "lab9": [
+                {
+                    "find benzyl_alcohol": 2,
+                    "find oxidizing_agent": 1,
+                    "wash beaker": 1,
+                    "add benzyl_alcohol to beaker": 3,
+                    "add oxidizing_agent to beaker": 3,
+                    "heat beaker*": 5,
+                    "cool beaker*": 1,
+                    "dry beaker*": 4
+                },
+                {
+                    "add benzyl_alcohol to beaker": [
+                        "find benzyl_alcohol",
+                        "wash beaker"
+                    ],
+                    "add oxidizing_agent to beaker": [
+                        "find oxidizing_agent",
+                        "wash beaker"
+                    ],
+                    "heat beaker*": [
+                        "add oxidizing_agent to beaker",
+                        "add benzyl_alcohol to beaker"
+                    ],
+                    "cool beaker*": [
+                        "heat beaker*"
+                    ],
+                    "dry beaker*": [
+                        "cool beaker*"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 7,
+        "tasks": [
+            "lab8",
+            "lab9",
+            "lab10"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Perform a pH test on salt solution and label the salt.**\n**Task Add chemicals to beaker and synthesize benzaldehyde by heating, cooling and drying.**\n**Task Prepare crystallized copper sulfate.**\nValid Actions with time required for completion:\n- pick salt: 1 minutes\n- wash test_tube: 3 minutes\n- dissolve salt in test_tube: 8 minutes\n- pick ph_paper: 1 minutes\n- put ph_paper in test_tube: 3 minutes\n- label salt: 1 minutes\n- find benzyl_alcohol: 2 minutes\n- find oxidizing_agent: 1 minutes\n- wash beaker: 1 minutes\n- add benzyl_alcohol to beaker: 3 minutes\n- add oxidizing_agent to beaker: 3 minutes\n- heat beaker: 5 minutes\n- cool beaker: 1 minutes\n- dry beaker: 4 minutes\n- find copper_sulfate_solution: 3 minutes\n- heat copper_sulfate_solution: 4 minutes\n- crystallize copper_sulfate_solution: 4 minutes\n- filter copper_sulfate_solution: 3 minutes\n",
+        "dependency_graph": {
+            "lab8": [
+                {
+                    "pick salt": 1,
+                    "wash test_tube": 3,
+                    "dissolve salt in test_tube*": 8,
+                    "pick ph_paper": 1,
+                    "put ph_paper in test_tube": 3,
+                    "label salt": 1
+                },
+                {
+                    "dissolve salt in test_tube*": [
+                        "pick salt",
+                        "wash test_tube"
+                    ],
+                    "put ph_paper in test_tube": [
+                        "dissolve salt in test_tube*",
+                        "pick ph_paper"
+                    ],
+                    "label salt": [
+                        "put ph_paper in test_tube"
+                    ]
+                }
+            ],
+            "lab9": [
+                {
+                    "find benzyl_alcohol": 2,
+                    "find oxidizing_agent": 1,
+                    "wash beaker": 1,
+                    "add benzyl_alcohol to beaker": 3,
+                    "add oxidizing_agent to beaker": 3,
+                    "heat beaker*": 5,
+                    "cool beaker*": 1,
+                    "dry beaker*": 4
+                },
+                {
+                    "add benzyl_alcohol to beaker": [
+                        "find benzyl_alcohol",
+                        "wash beaker"
+                    ],
+                    "add oxidizing_agent to beaker": [
+                        "find oxidizing_agent",
+                        "wash beaker"
+                    ],
+                    "heat beaker*": [
+                        "add oxidizing_agent to beaker",
+                        "add benzyl_alcohol to beaker"
+                    ],
+                    "cool beaker*": [
+                        "heat beaker*"
+                    ],
+                    "dry beaker*": [
+                        "cool beaker*"
+                    ]
+                }
+            ],
+            "lab10": [
+                {
+                    "find copper_sulfate_solution": 3,
+                    "heat copper_sulfate_solution*": 4,
+                    "crystallize copper_sulfate_solution*": 4,
+                    "filter copper_sulfate_solution": 3
+                },
+                {
+                    "heat copper_sulfate_solution*": [
+                        "find copper_sulfate_solution"
+                    ],
+                    "crystallize copper_sulfate_solution*": [
+                        "heat copper_sulfate_solution*"
+                    ],
+                    "filter copper_sulfate_solution": [
+                        "crystallize copper_sulfate_solution*"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 8,
+        "tasks": [
+            "lab9",
+            "lab10",
+            "lab1"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Add chemicals to beaker and synthesize benzaldehyde by heating, cooling and drying.**\n**Task Prepare crystallized copper sulfate.**\n**Task Prepare heated solution in test tube.**\nValid Actions with time required for completion:\n- find benzyl_alcohol: 2 minutes\n- find oxidizing_agent: 1 minutes\n- wash beaker: 1 minutes\n- add benzyl_alcohol to beaker: 3 minutes\n- add oxidizing_agent to beaker: 3 minutes\n- heat beaker: 5 minutes\n- cool beaker: 1 minutes\n- dry beaker: 4 minutes\n- find copper_sulfate_solution: 3 minutes\n- heat copper_sulfate_solution: 4 minutes\n- crystallize copper_sulfate_solution: 4 minutes\n- filter copper_sulfate_solution: 3 minutes\n- wash test_tube: 4 minutes\n- add solution to test_tube: 4 minutes\n- heat test_tube: 5 minutes\n",
+        "dependency_graph": {
+            "lab9": [
+                {
+                    "find benzyl_alcohol": 2,
+                    "find oxidizing_agent": 1,
+                    "wash beaker": 1,
+                    "add benzyl_alcohol to beaker": 3,
+                    "add oxidizing_agent to beaker": 3,
+                    "heat beaker*": 5,
+                    "cool beaker*": 1,
+                    "dry beaker*": 4
+                },
+                {
+                    "add benzyl_alcohol to beaker": [
+                        "find benzyl_alcohol",
+                        "wash beaker"
+                    ],
+                    "add oxidizing_agent to beaker": [
+                        "find oxidizing_agent",
+                        "wash beaker"
+                    ],
+                    "heat beaker*": [
+                        "add oxidizing_agent to beaker",
+                        "add benzyl_alcohol to beaker"
+                    ],
+                    "cool beaker*": [
+                        "heat beaker*"
+                    ],
+                    "dry beaker*": [
+                        "cool beaker*"
+                    ]
+                }
+            ],
+            "lab10": [
+                {
+                    "find copper_sulfate_solution": 3,
+                    "heat copper_sulfate_solution*": 4,
+                    "crystallize copper_sulfate_solution*": 4,
+                    "filter copper_sulfate_solution": 3
+                },
+                {
+                    "heat copper_sulfate_solution*": [
+                        "find copper_sulfate_solution"
+                    ],
+                    "crystallize copper_sulfate_solution*": [
+                        "heat copper_sulfate_solution*"
+                    ],
+                    "filter copper_sulfate_solution": [
+                        "crystallize copper_sulfate_solution*"
+                    ]
+                }
+            ],
+            "lab1": [
+                {
+                    "wash test_tube": 4,
+                    "add solution to test_tube": 4,
+                    "heat test_tube*": 5
+                },
+                {
+                    "add solution to test_tube": [
+                        "wash test_tube"
+                    ],
+                    "heat test_tube*": [
+                        "add solution to test_tube"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 9,
+        "tasks": [
+            "lab10",
+            "lab1",
+            "lab2"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare crystallized copper sulfate.**\n**Task Prepare heated solution in test tube.**\n**Task Prepare a mixture of sulfuric acid and sodium.**\nValid Actions with time required for completion:\n- find copper_sulfate_solution: 3 minutes\n- heat copper_sulfate_solution: 4 minutes\n- crystallize copper_sulfate_solution: 4 minutes\n- filter copper_sulfate_solution: 3 minutes\n- wash test_tube: 4 minutes\n- add solution to test_tube: 4 minutes\n- heat test_tube: 5 minutes\n- wash beaker: 3 minutes\n- find sulfuric_acid: 1 minutes\n- find sodium_flakes: 1 minutes\n- dilute sulfuric_acid: 3 minutes\n- cut sodium_flakes: 2 minutes\n- add sulfuric_acid to beaker: 2 minutes\n- heat sodium_flakes: 5 minutes\n- add sodium_flakes to beaker: 2 minutes\n",
+        "dependency_graph": {
+            "lab10": [
+                {
+                    "find copper_sulfate_solution": 3,
+                    "heat copper_sulfate_solution*": 4,
+                    "crystallize copper_sulfate_solution*": 4,
+                    "filter copper_sulfate_solution": 3
+                },
+                {
+                    "heat copper_sulfate_solution*": [
+                        "find copper_sulfate_solution"
+                    ],
+                    "crystallize copper_sulfate_solution*": [
+                        "heat copper_sulfate_solution*"
+                    ],
+                    "filter copper_sulfate_solution": [
+                        "crystallize copper_sulfate_solution*"
+                    ]
+                }
+            ],
+            "lab1": [
+                {
+                    "wash test_tube": 4,
+                    "add solution to test_tube": 4,
+                    "heat test_tube*": 5
+                },
+                {
+                    "add solution to test_tube": [
+                        "wash test_tube"
+                    ],
+                    "heat test_tube*": [
+                        "add solution to test_tube"
+                    ]
+                }
+            ],
+            "lab2": [
+                {
+                    "wash beaker": 3,
+                    "find sulfuric_acid": 1,
+                    "find sodium_flakes": 1,
+                    "dilute sulfuric_acid": 3,
+                    "cut sodium_flakes": 2,
+                    "add sulfuric_acid to beaker": 2,
+                    "heat sodium_flakes*": 5,
+                    "add sodium_flakes to beaker": 2
+                },
+                {
+                    "dilute sulfuric_acid": [
+                        "find sulfuric_acid"
+                    ],
+                    "cut sodium_flakes": [
+                        "find sodium_flakes"
+                    ],
+                    "add sulfuric_acid to beaker": [
+                        "dilute sulfuric_acid",
+                        "wash beaker"
+                    ],
+                    "heat sodium_flakes*": [
+                        "cut sodium_flakes"
+                    ],
+                    "add sodium_flakes to beaker": [
+                        "heat sodium_flakes*",
+                        "wash beaker"
+                    ]
+                }
+            ]
+        }
+    }
+]

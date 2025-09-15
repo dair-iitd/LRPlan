@@ -1,0 +1,1243 @@
+[
+    {
+        "id": 0,
+        "tasks": [
+            "cooking1",
+            "cooking2",
+            "cooking3"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Make a dish of beef fried rice, which consists of cooked rice and fried beef.**\n**Task Prepare a noodle dish, which consists of cooked noodle, fried mushrooms and shrimp.**\n**Task Make tomato noodle stir-fry, which consists of cooked noodle and fried tomato.**\nValid Actions with time required for completion:\n- wash dish: 3 minutes\n- pick rice: 2 minutes\n- pick beef: 2 minutes\n- cook rice in pot: 4 minutes\n- add rice to dish: 2 minutes\n- chop beef: 3 minutes\n- fry beef in fryer: 5 minutes\n- add beef to dish: 2 minutes\n- wash dish: 3 minutes\n- pick noodle: 1 minutes\n- cook noodle in pot: 5 minutes\n- add noodle to dish: 2 minutes\n- pick mushroom: 2 minutes\n- chop mushroom: 3 minutes\n- fry mushroom in fryer: 2 minutes\n- add mushroom to dish: 2 minutes\n- pick shrimp: 1 minutes\n- chop shrimp: 2 minutes\n- fry shrimp in fryer: 4 minutes\n- add shrimp to dish: 2 minutes\n- pick noodle: 1 minutes\n- cook noodle in pot: 5 minutes\n- add noodle to dish: 3 minutes\n- pick tomato: 2 minutes\n- chop tomato: 3 minutes\n- fry tomato in fryer: 2 minutes\n- add tomato to dish: 3 minutes\n- wash dish: 2 minutes\n",
+        "dependency_graph": {
+            "cooking1": [
+                {
+                    "wash dish": 3,
+                    "pick rice": 2,
+                    "pick beef": 2,
+                    "cook rice in pot*": 4,
+                    "add rice to dish": 2,
+                    "chop beef": 3,
+                    "fry beef in fryer*": 5,
+                    "add beef to dish": 2
+                },
+                {
+                    "cook rice in pot*": [
+                        "pick rice"
+                    ],
+                    "add rice to dish": [
+                        "cook rice in pot*",
+                        "wash dish"
+                    ],
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "fry beef in fryer*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "fry beef in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking2": [
+                {
+                    "wash dish": 3,
+                    "pick noodle": 1,
+                    "cook noodle in pot*": 5,
+                    "add noodle to dish": 2,
+                    "pick mushroom": 2,
+                    "chop mushroom": 3,
+                    "fry mushroom in fryer*": 2,
+                    "add mushroom to dish": 2,
+                    "pick shrimp": 1,
+                    "chop shrimp": 2,
+                    "fry shrimp in fryer*": 4,
+                    "add shrimp to dish": 2
+                },
+                {
+                    "cook noodle in pot*": [
+                        "pick noodle"
+                    ],
+                    "add noodle to dish": [
+                        "cook noodle in pot*",
+                        "wash dish"
+                    ],
+                    "chop mushroom": [
+                        "pick mushroom"
+                    ],
+                    "fry mushroom in fryer*": [
+                        "chop mushroom"
+                    ],
+                    "add mushroom to dish": [
+                        "fry mushroom in fryer*",
+                        "wash dish"
+                    ],
+                    "chop shrimp": [
+                        "pick shrimp"
+                    ],
+                    "fry shrimp in fryer*": [
+                        "chop shrimp"
+                    ],
+                    "add shrimp to dish": [
+                        "fry shrimp in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking3": [
+                {
+                    "pick noodle": 1,
+                    "cook noodle in pot*": 5,
+                    "add noodle to dish": 3,
+                    "pick tomato": 2,
+                    "chop tomato": 3,
+                    "fry tomato in fryer*": 2,
+                    "add tomato to dish": 3,
+                    "wash dish": 2
+                },
+                {
+                    "cook noodle in pot*": [
+                        "pick noodle"
+                    ],
+                    "add noodle to dish": [
+                        "cook noodle in pot*",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "fry tomato in fryer*": [
+                        "chop tomato"
+                    ],
+                    "add tomato to dish": [
+                        "fry tomato in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 1,
+        "tasks": [
+            "cooking2",
+            "cooking3",
+            "cooking4"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare a noodle dish, which consists of cooked noodle, fried mushrooms and shrimp.**\n**Task Make tomato noodle stir-fry, which consists of cooked noodle and fried tomato.**\n**Task Prepare and bake a cheese and tomato pizza.**\nValid Actions with time required for completion:\n- wash dish: 3 minutes\n- pick noodle: 1 minutes\n- cook noodle in pot: 5 minutes\n- add noodle to dish: 2 minutes\n- pick mushroom: 2 minutes\n- chop mushroom: 3 minutes\n- fry mushroom in fryer: 2 minutes\n- add mushroom to dish: 2 minutes\n- pick shrimp: 1 minutes\n- chop shrimp: 2 minutes\n- fry shrimp in fryer: 4 minutes\n- add shrimp to dish: 2 minutes\n- pick noodle: 1 minutes\n- cook noodle in pot: 5 minutes\n- add noodle to dish: 3 minutes\n- pick tomato: 2 minutes\n- chop tomato: 3 minutes\n- fry tomato in fryer: 2 minutes\n- add tomato to dish: 3 minutes\n- wash dish: 2 minutes\n- wash dish: 1 minutes\n- pick dough: 1 minutes\n- chop dough: 3 minutes\n- add dough to dish: 2 minutes\n- pick cheese: 2 minutes\n- chop cheese: 1 minutes\n- add cheese to dish: 4 minutes\n- pick tomato: 3 minutes\n- chop tomato: 2 minutes\n- add tomato to dish: 1 minutes\n- bake dish in oven: 10 minutes\n",
+        "dependency_graph": {
+            "cooking2": [
+                {
+                    "wash dish": 3,
+                    "pick noodle": 1,
+                    "cook noodle in pot*": 5,
+                    "add noodle to dish": 2,
+                    "pick mushroom": 2,
+                    "chop mushroom": 3,
+                    "fry mushroom in fryer*": 2,
+                    "add mushroom to dish": 2,
+                    "pick shrimp": 1,
+                    "chop shrimp": 2,
+                    "fry shrimp in fryer*": 4,
+                    "add shrimp to dish": 2
+                },
+                {
+                    "cook noodle in pot*": [
+                        "pick noodle"
+                    ],
+                    "add noodle to dish": [
+                        "cook noodle in pot*",
+                        "wash dish"
+                    ],
+                    "chop mushroom": [
+                        "pick mushroom"
+                    ],
+                    "fry mushroom in fryer*": [
+                        "chop mushroom"
+                    ],
+                    "add mushroom to dish": [
+                        "fry mushroom in fryer*",
+                        "wash dish"
+                    ],
+                    "chop shrimp": [
+                        "pick shrimp"
+                    ],
+                    "fry shrimp in fryer*": [
+                        "chop shrimp"
+                    ],
+                    "add shrimp to dish": [
+                        "fry shrimp in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking3": [
+                {
+                    "pick noodle": 1,
+                    "cook noodle in pot*": 5,
+                    "add noodle to dish": 3,
+                    "pick tomato": 2,
+                    "chop tomato": 3,
+                    "fry tomato in fryer*": 2,
+                    "add tomato to dish": 3,
+                    "wash dish": 2
+                },
+                {
+                    "cook noodle in pot*": [
+                        "pick noodle"
+                    ],
+                    "add noodle to dish": [
+                        "cook noodle in pot*",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "fry tomato in fryer*": [
+                        "chop tomato"
+                    ],
+                    "add tomato to dish": [
+                        "fry tomato in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking4": [
+                {
+                    "wash dish": 1,
+                    "pick dough": 1,
+                    "chop dough": 3,
+                    "add dough to dish": 2,
+                    "pick cheese": 2,
+                    "chop cheese": 1,
+                    "add cheese to dish": 4,
+                    "pick tomato": 3,
+                    "chop tomato": 2,
+                    "add tomato to dish": 1,
+                    "bake dish in oven*": 10
+                },
+                {
+                    "chop dough": [
+                        "pick dough"
+                    ],
+                    "add dough to dish": [
+                        "chop dough",
+                        "wash dish"
+                    ],
+                    "chop cheese": [
+                        "pick cheese"
+                    ],
+                    "add cheese to dish": [
+                        "chop cheese",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "add tomato to dish": [
+                        "chop tomato",
+                        "wash dish"
+                    ],
+                    "bake dish in oven*": [
+                        "add dough to dish",
+                        "add cheese to dish",
+                        "add tomato to dish"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 2,
+        "tasks": [
+            "cooking3",
+            "cooking4",
+            "cooking5"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Make tomato noodle stir-fry, which consists of cooked noodle and fried tomato.**\n**Task Prepare and bake a cheese and tomato pizza.**\n**Task Prepare chicken and potato stir-fry, which consists of fried chicken and fried potato.**\nValid Actions with time required for completion:\n- pick noodle: 1 minutes\n- cook noodle in pot: 5 minutes\n- add noodle to dish: 3 minutes\n- pick tomato: 2 minutes\n- chop tomato: 3 minutes\n- fry tomato in fryer: 2 minutes\n- add tomato to dish: 3 minutes\n- wash dish: 2 minutes\n- wash dish: 1 minutes\n- pick dough: 1 minutes\n- chop dough: 3 minutes\n- add dough to dish: 2 minutes\n- pick cheese: 2 minutes\n- chop cheese: 1 minutes\n- add cheese to dish: 4 minutes\n- pick tomato: 3 minutes\n- chop tomato: 2 minutes\n- add tomato to dish: 1 minutes\n- bake dish in oven: 10 minutes\n- pick chicken: 1 minutes\n- chop chicken: 5 minutes\n- fry chicken in fryer: 5 minutes\n- add chicken to dish: 3 minutes\n- pick potato: 1 minutes\n- chop potato: 3 minutes\n- fry potato in fryer: 6 minutes\n- add potato to dish: 3 minutes\n- wash dish: 1 minutes\n",
+        "dependency_graph": {
+            "cooking3": [
+                {
+                    "pick noodle": 1,
+                    "cook noodle in pot*": 5,
+                    "add noodle to dish": 3,
+                    "pick tomato": 2,
+                    "chop tomato": 3,
+                    "fry tomato in fryer*": 2,
+                    "add tomato to dish": 3,
+                    "wash dish": 2
+                },
+                {
+                    "cook noodle in pot*": [
+                        "pick noodle"
+                    ],
+                    "add noodle to dish": [
+                        "cook noodle in pot*",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "fry tomato in fryer*": [
+                        "chop tomato"
+                    ],
+                    "add tomato to dish": [
+                        "fry tomato in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking4": [
+                {
+                    "wash dish": 1,
+                    "pick dough": 1,
+                    "chop dough": 3,
+                    "add dough to dish": 2,
+                    "pick cheese": 2,
+                    "chop cheese": 1,
+                    "add cheese to dish": 4,
+                    "pick tomato": 3,
+                    "chop tomato": 2,
+                    "add tomato to dish": 1,
+                    "bake dish in oven*": 10
+                },
+                {
+                    "chop dough": [
+                        "pick dough"
+                    ],
+                    "add dough to dish": [
+                        "chop dough",
+                        "wash dish"
+                    ],
+                    "chop cheese": [
+                        "pick cheese"
+                    ],
+                    "add cheese to dish": [
+                        "chop cheese",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "add tomato to dish": [
+                        "chop tomato",
+                        "wash dish"
+                    ],
+                    "bake dish in oven*": [
+                        "add dough to dish",
+                        "add cheese to dish",
+                        "add tomato to dish"
+                    ]
+                }
+            ],
+            "cooking5": [
+                {
+                    "pick chicken": 1,
+                    "chop chicken": 5,
+                    "fry chicken in fryer*": 5,
+                    "add chicken to dish": 3,
+                    "pick potato": 1,
+                    "chop potato": 3,
+                    "fry potato in fryer*": 6,
+                    "add potato to dish": 3,
+                    "wash dish": 1
+                },
+                {
+                    "chop chicken": [
+                        "pick chicken"
+                    ],
+                    "fry chicken in fryer*": [
+                        "chop chicken"
+                    ],
+                    "add chicken to dish": [
+                        "fry chicken in fryer*",
+                        "wash dish"
+                    ],
+                    "chop potato": [
+                        "pick potato"
+                    ],
+                    "fry potato in fryer*": [
+                        "chop potato"
+                    ],
+                    "add potato to dish": [
+                        "fry potato in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 3,
+        "tasks": [
+            "cooking4",
+            "cooking5",
+            "cooking6"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare and bake a cheese and tomato pizza.**\n**Task Prepare chicken and potato stir-fry, which consists of fried chicken and fried potato.**\n**Task Prepare a baked dish with dough, cheese, tomato, and fried beef.**\nValid Actions with time required for completion:\n- wash dish: 1 minutes\n- pick dough: 1 minutes\n- chop dough: 3 minutes\n- add dough to dish: 2 minutes\n- pick cheese: 2 minutes\n- chop cheese: 1 minutes\n- add cheese to dish: 4 minutes\n- pick tomato: 3 minutes\n- chop tomato: 2 minutes\n- add tomato to dish: 1 minutes\n- bake dish in oven: 10 minutes\n- pick chicken: 1 minutes\n- chop chicken: 5 minutes\n- fry chicken in fryer: 5 minutes\n- add chicken to dish: 3 minutes\n- pick potato: 1 minutes\n- chop potato: 3 minutes\n- fry potato in fryer: 6 minutes\n- add potato to dish: 3 minutes\n- wash dish: 1 minutes\n- pick dough: 1 minutes\n- chop dough: 2 minutes\n- add dough to dish: 2 minutes\n- pick cheese: 2 minutes\n- chop cheese: 1 minutes\n- add cheese to dish: 1 minutes\n- pick tomato: 1 minutes\n- chop tomato: 2 minutes\n- add tomato to dish: 1 minutes\n- pick beef: 1 minutes\n- chop beef: 2 minutes\n- fry beef in fryer: 6 minutes\n- add beef to dish: 2 minutes\n- wash dish: 2 minutes\n- bake dish in oven: 5 minutes\n",
+        "dependency_graph": {
+            "cooking4": [
+                {
+                    "wash dish": 1,
+                    "pick dough": 1,
+                    "chop dough": 3,
+                    "add dough to dish": 2,
+                    "pick cheese": 2,
+                    "chop cheese": 1,
+                    "add cheese to dish": 4,
+                    "pick tomato": 3,
+                    "chop tomato": 2,
+                    "add tomato to dish": 1,
+                    "bake dish in oven*": 10
+                },
+                {
+                    "chop dough": [
+                        "pick dough"
+                    ],
+                    "add dough to dish": [
+                        "chop dough",
+                        "wash dish"
+                    ],
+                    "chop cheese": [
+                        "pick cheese"
+                    ],
+                    "add cheese to dish": [
+                        "chop cheese",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "add tomato to dish": [
+                        "chop tomato",
+                        "wash dish"
+                    ],
+                    "bake dish in oven*": [
+                        "add dough to dish",
+                        "add cheese to dish",
+                        "add tomato to dish"
+                    ]
+                }
+            ],
+            "cooking5": [
+                {
+                    "pick chicken": 1,
+                    "chop chicken": 5,
+                    "fry chicken in fryer*": 5,
+                    "add chicken to dish": 3,
+                    "pick potato": 1,
+                    "chop potato": 3,
+                    "fry potato in fryer*": 6,
+                    "add potato to dish": 3,
+                    "wash dish": 1
+                },
+                {
+                    "chop chicken": [
+                        "pick chicken"
+                    ],
+                    "fry chicken in fryer*": [
+                        "chop chicken"
+                    ],
+                    "add chicken to dish": [
+                        "fry chicken in fryer*",
+                        "wash dish"
+                    ],
+                    "chop potato": [
+                        "pick potato"
+                    ],
+                    "fry potato in fryer*": [
+                        "chop potato"
+                    ],
+                    "add potato to dish": [
+                        "fry potato in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking6": [
+                {
+                    "pick dough": 1,
+                    "chop dough": 2,
+                    "add dough to dish": 2,
+                    "pick cheese": 2,
+                    "chop cheese": 1,
+                    "add cheese to dish": 1,
+                    "pick tomato": 1,
+                    "chop tomato": 2,
+                    "add tomato to dish": 1,
+                    "pick beef": 1,
+                    "chop beef": 2,
+                    "fry beef in fryer*": 6,
+                    "add beef to dish": 2,
+                    "wash dish": 2,
+                    "bake dish in oven*": 5
+                },
+                {
+                    "chop dough": [
+                        "pick dough"
+                    ],
+                    "add dough to dish": [
+                        "chop dough",
+                        "wash dish"
+                    ],
+                    "chop cheese": [
+                        "pick cheese"
+                    ],
+                    "add cheese to dish": [
+                        "chop cheese",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "add tomato to dish": [
+                        "chop tomato",
+                        "wash dish"
+                    ],
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "fry beef in fryer*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "fry beef in fryer*",
+                        "wash dish"
+                    ],
+                    "bake dish in oven*": [
+                        "add dough to dish",
+                        "add cheese to dish",
+                        "add tomato to dish",
+                        "add beef to dish"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 4,
+        "tasks": [
+            "cooking5",
+            "cooking6",
+            "cooking7"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare chicken and potato stir-fry, which consists of fried chicken and fried potato.**\n**Task Prepare a baked dish with dough, cheese, tomato, and fried beef.**\n**Task Make chicken fried rice, which consists of fried rice and chicken.**\nValid Actions with time required for completion:\n- pick chicken: 1 minutes\n- chop chicken: 5 minutes\n- fry chicken in fryer: 5 minutes\n- add chicken to dish: 3 minutes\n- pick potato: 1 minutes\n- chop potato: 3 minutes\n- fry potato in fryer: 6 minutes\n- add potato to dish: 3 minutes\n- wash dish: 1 minutes\n- pick dough: 1 minutes\n- chop dough: 2 minutes\n- add dough to dish: 2 minutes\n- pick cheese: 2 minutes\n- chop cheese: 1 minutes\n- add cheese to dish: 1 minutes\n- pick tomato: 1 minutes\n- chop tomato: 2 minutes\n- add tomato to dish: 1 minutes\n- pick beef: 1 minutes\n- chop beef: 2 minutes\n- fry beef in fryer: 6 minutes\n- add beef to dish: 2 minutes\n- wash dish: 2 minutes\n- bake dish in oven: 5 minutes\n- pick rice: 1 minutes\n- cook rice in pot: 5 minutes\n- fry rice in fryer: 7 minutes\n- add rice to dish: 1 minutes\n- pick chicken: 1 minutes\n- chop chicken: 3 minutes\n- fry chicken in fryer: 4 minutes\n- add chicken to dish: 3 minutes\n- wash dish: 3 minutes\n",
+        "dependency_graph": {
+            "cooking5": [
+                {
+                    "pick chicken": 1,
+                    "chop chicken": 5,
+                    "fry chicken in fryer*": 5,
+                    "add chicken to dish": 3,
+                    "pick potato": 1,
+                    "chop potato": 3,
+                    "fry potato in fryer*": 6,
+                    "add potato to dish": 3,
+                    "wash dish": 1
+                },
+                {
+                    "chop chicken": [
+                        "pick chicken"
+                    ],
+                    "fry chicken in fryer*": [
+                        "chop chicken"
+                    ],
+                    "add chicken to dish": [
+                        "fry chicken in fryer*",
+                        "wash dish"
+                    ],
+                    "chop potato": [
+                        "pick potato"
+                    ],
+                    "fry potato in fryer*": [
+                        "chop potato"
+                    ],
+                    "add potato to dish": [
+                        "fry potato in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking6": [
+                {
+                    "pick dough": 1,
+                    "chop dough": 2,
+                    "add dough to dish": 2,
+                    "pick cheese": 2,
+                    "chop cheese": 1,
+                    "add cheese to dish": 1,
+                    "pick tomato": 1,
+                    "chop tomato": 2,
+                    "add tomato to dish": 1,
+                    "pick beef": 1,
+                    "chop beef": 2,
+                    "fry beef in fryer*": 6,
+                    "add beef to dish": 2,
+                    "wash dish": 2,
+                    "bake dish in oven*": 5
+                },
+                {
+                    "chop dough": [
+                        "pick dough"
+                    ],
+                    "add dough to dish": [
+                        "chop dough",
+                        "wash dish"
+                    ],
+                    "chop cheese": [
+                        "pick cheese"
+                    ],
+                    "add cheese to dish": [
+                        "chop cheese",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "add tomato to dish": [
+                        "chop tomato",
+                        "wash dish"
+                    ],
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "fry beef in fryer*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "fry beef in fryer*",
+                        "wash dish"
+                    ],
+                    "bake dish in oven*": [
+                        "add dough to dish",
+                        "add cheese to dish",
+                        "add tomato to dish",
+                        "add beef to dish"
+                    ]
+                }
+            ],
+            "cooking7": [
+                {
+                    "pick rice": 1,
+                    "cook rice in pot*": 5,
+                    "fry rice in fryer*": 7,
+                    "add rice to dish": 1,
+                    "pick chicken": 1,
+                    "chop chicken": 3,
+                    "fry chicken in fryer*": 4,
+                    "add chicken to dish": 3,
+                    "wash dish": 3
+                },
+                {
+                    "cook rice in pot*": [
+                        "pick rice"
+                    ],
+                    "fry rice in fryer*": [
+                        "cook rice in pot*"
+                    ],
+                    "add rice to dish": [
+                        "fry rice in fryer*",
+                        "wash dish"
+                    ],
+                    "chop chicken": [
+                        "pick chicken"
+                    ],
+                    "fry chicken in fryer*": [
+                        "chop chicken"
+                    ],
+                    "add chicken to dish": [
+                        "fry chicken in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 5,
+        "tasks": [
+            "cooking6",
+            "cooking7",
+            "cooking8"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare a baked dish with dough, cheese, tomato, and fried beef.**\n**Task Make chicken fried rice, which consists of fried rice and chicken.**\n**Task Prepare beef stir-fried noodle, which consists of cooked noodle and fried beef.**\nValid Actions with time required for completion:\n- pick dough: 1 minutes\n- chop dough: 2 minutes\n- add dough to dish: 2 minutes\n- pick cheese: 2 minutes\n- chop cheese: 1 minutes\n- add cheese to dish: 1 minutes\n- pick tomato: 1 minutes\n- chop tomato: 2 minutes\n- add tomato to dish: 1 minutes\n- pick beef: 1 minutes\n- chop beef: 2 minutes\n- fry beef in fryer: 6 minutes\n- add beef to dish: 2 minutes\n- wash dish: 2 minutes\n- bake dish in oven: 5 minutes\n- pick rice: 1 minutes\n- cook rice in pot: 5 minutes\n- fry rice in fryer: 7 minutes\n- add rice to dish: 1 minutes\n- pick chicken: 1 minutes\n- chop chicken: 3 minutes\n- fry chicken in fryer: 4 minutes\n- add chicken to dish: 3 minutes\n- wash dish: 3 minutes\n- pick noodle: 1 minutes\n- cook noodle in pot: 6 minutes\n- add noodle to dish: 2 minutes\n- pick beef: 1 minutes\n- chop beef: 3 minutes\n- fry beef in fryer: 6 minutes\n- add beef to dish: 2 minutes\n- wash dish: 3 minutes\n",
+        "dependency_graph": {
+            "cooking6": [
+                {
+                    "pick dough": 1,
+                    "chop dough": 2,
+                    "add dough to dish": 2,
+                    "pick cheese": 2,
+                    "chop cheese": 1,
+                    "add cheese to dish": 1,
+                    "pick tomato": 1,
+                    "chop tomato": 2,
+                    "add tomato to dish": 1,
+                    "pick beef": 1,
+                    "chop beef": 2,
+                    "fry beef in fryer*": 6,
+                    "add beef to dish": 2,
+                    "wash dish": 2,
+                    "bake dish in oven*": 5
+                },
+                {
+                    "chop dough": [
+                        "pick dough"
+                    ],
+                    "add dough to dish": [
+                        "chop dough",
+                        "wash dish"
+                    ],
+                    "chop cheese": [
+                        "pick cheese"
+                    ],
+                    "add cheese to dish": [
+                        "chop cheese",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "add tomato to dish": [
+                        "chop tomato",
+                        "wash dish"
+                    ],
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "fry beef in fryer*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "fry beef in fryer*",
+                        "wash dish"
+                    ],
+                    "bake dish in oven*": [
+                        "add dough to dish",
+                        "add cheese to dish",
+                        "add tomato to dish",
+                        "add beef to dish"
+                    ]
+                }
+            ],
+            "cooking7": [
+                {
+                    "pick rice": 1,
+                    "cook rice in pot*": 5,
+                    "fry rice in fryer*": 7,
+                    "add rice to dish": 1,
+                    "pick chicken": 1,
+                    "chop chicken": 3,
+                    "fry chicken in fryer*": 4,
+                    "add chicken to dish": 3,
+                    "wash dish": 3
+                },
+                {
+                    "cook rice in pot*": [
+                        "pick rice"
+                    ],
+                    "fry rice in fryer*": [
+                        "cook rice in pot*"
+                    ],
+                    "add rice to dish": [
+                        "fry rice in fryer*",
+                        "wash dish"
+                    ],
+                    "chop chicken": [
+                        "pick chicken"
+                    ],
+                    "fry chicken in fryer*": [
+                        "chop chicken"
+                    ],
+                    "add chicken to dish": [
+                        "fry chicken in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking8": [
+                {
+                    "pick noodle": 1,
+                    "cook noodle in pot*": 6,
+                    "add noodle to dish": 2,
+                    "pick beef": 1,
+                    "chop beef": 3,
+                    "fry beef in fryer*": 6,
+                    "add beef to dish": 2,
+                    "wash dish": 3
+                },
+                {
+                    "cook noodle in pot*": [
+                        "pick noodle"
+                    ],
+                    "add noodle to dish": [
+                        "cook noodle in pot*",
+                        "wash dish"
+                    ],
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "fry beef in fryer*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "fry beef in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 6,
+        "tasks": [
+            "cooking7",
+            "cooking8",
+            "cooking9"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Make chicken fried rice, which consists of fried rice and chicken.**\n**Task Prepare beef stir-fried noodle, which consists of cooked noodle and fried beef.**\n**Task Prepare a dish of rice topped with Nori seaweed and cooked fish.**\nValid Actions with time required for completion:\n- pick rice: 1 minutes\n- cook rice in pot: 5 minutes\n- fry rice in fryer: 7 minutes\n- add rice to dish: 1 minutes\n- pick chicken: 1 minutes\n- chop chicken: 3 minutes\n- fry chicken in fryer: 4 minutes\n- add chicken to dish: 3 minutes\n- wash dish: 3 minutes\n- pick noodle: 1 minutes\n- cook noodle in pot: 6 minutes\n- add noodle to dish: 2 minutes\n- pick beef: 1 minutes\n- chop beef: 3 minutes\n- fry beef in fryer: 6 minutes\n- add beef to dish: 2 minutes\n- wash dish: 3 minutes\n- wash dish: 3 minutes\n- pick rice: 1 minutes\n- cook rice in pot: 5 minutes\n- add rice to dish: 3 minutes\n- pick nori_seaweed: 2 minutes\n- add nori_seaweed to dish: 1 minutes\n- pick fish: 1 minutes\n- cook fish in pot: 6 minutes\n- add fish to dish: 2 minutes\n",
+        "dependency_graph": {
+            "cooking7": [
+                {
+                    "pick rice": 1,
+                    "cook rice in pot*": 5,
+                    "fry rice in fryer*": 7,
+                    "add rice to dish": 1,
+                    "pick chicken": 1,
+                    "chop chicken": 3,
+                    "fry chicken in fryer*": 4,
+                    "add chicken to dish": 3,
+                    "wash dish": 3
+                },
+                {
+                    "cook rice in pot*": [
+                        "pick rice"
+                    ],
+                    "fry rice in fryer*": [
+                        "cook rice in pot*"
+                    ],
+                    "add rice to dish": [
+                        "fry rice in fryer*",
+                        "wash dish"
+                    ],
+                    "chop chicken": [
+                        "pick chicken"
+                    ],
+                    "fry chicken in fryer*": [
+                        "chop chicken"
+                    ],
+                    "add chicken to dish": [
+                        "fry chicken in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking8": [
+                {
+                    "pick noodle": 1,
+                    "cook noodle in pot*": 6,
+                    "add noodle to dish": 2,
+                    "pick beef": 1,
+                    "chop beef": 3,
+                    "fry beef in fryer*": 6,
+                    "add beef to dish": 2,
+                    "wash dish": 3
+                },
+                {
+                    "cook noodle in pot*": [
+                        "pick noodle"
+                    ],
+                    "add noodle to dish": [
+                        "cook noodle in pot*",
+                        "wash dish"
+                    ],
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "fry beef in fryer*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "fry beef in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking9": [
+                {
+                    "wash dish": 3,
+                    "pick rice": 1,
+                    "cook rice in pot*": 5,
+                    "add rice to dish": 3,
+                    "pick nori_seaweed": 2,
+                    "add nori_seaweed to dish": 1,
+                    "pick fish": 1,
+                    "cook fish in pot*": 6,
+                    "add fish to dish": 2
+                },
+                {
+                    "cook rice in pot*": [
+                        "pick rice"
+                    ],
+                    "add rice to dish": [
+                        "cook rice in pot*",
+                        "wash dish"
+                    ],
+                    "add nori_seaweed to dish": [
+                        "wash dish",
+                        "pick nori_seaweed"
+                    ],
+                    "cook fish in pot*": [
+                        "pick fish"
+                    ],
+                    "add fish to dish": [
+                        "cook fish in pot*",
+                        "wash dish"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 7,
+        "tasks": [
+            "cooking8",
+            "cooking9",
+            "cooking10"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare beef stir-fried noodle, which consists of cooked noodle and fried beef.**\n**Task Prepare a dish of rice topped with Nori seaweed and cooked fish.**\n**Task Prepare beef and tomato stir-fry, which consists of cooked beef and fried tomato.**\nValid Actions with time required for completion:\n- pick noodle: 1 minutes\n- cook noodle in pot: 6 minutes\n- add noodle to dish: 2 minutes\n- pick beef: 1 minutes\n- chop beef: 3 minutes\n- fry beef in fryer: 6 minutes\n- add beef to dish: 2 minutes\n- wash dish: 3 minutes\n- wash dish: 3 minutes\n- pick rice: 1 minutes\n- cook rice in pot: 5 minutes\n- add rice to dish: 3 minutes\n- pick nori_seaweed: 2 minutes\n- add nori_seaweed to dish: 1 minutes\n- pick fish: 1 minutes\n- cook fish in pot: 6 minutes\n- add fish to dish: 2 minutes\n- pick beef: 1 minutes\n- chop beef: 4 minutes\n- cook beef in pot: 6 minutes\n- add beef to dish: 2 minutes\n- pick tomato: 2 minutes\n- chop tomato: 2 minutes\n- fry tomato in fryer: 5 minutes\n- add tomato to dish: 2 minutes\n- wash dish: 1 minutes\n",
+        "dependency_graph": {
+            "cooking8": [
+                {
+                    "pick noodle": 1,
+                    "cook noodle in pot*": 6,
+                    "add noodle to dish": 2,
+                    "pick beef": 1,
+                    "chop beef": 3,
+                    "fry beef in fryer*": 6,
+                    "add beef to dish": 2,
+                    "wash dish": 3
+                },
+                {
+                    "cook noodle in pot*": [
+                        "pick noodle"
+                    ],
+                    "add noodle to dish": [
+                        "cook noodle in pot*",
+                        "wash dish"
+                    ],
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "fry beef in fryer*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "fry beef in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking9": [
+                {
+                    "wash dish": 3,
+                    "pick rice": 1,
+                    "cook rice in pot*": 5,
+                    "add rice to dish": 3,
+                    "pick nori_seaweed": 2,
+                    "add nori_seaweed to dish": 1,
+                    "pick fish": 1,
+                    "cook fish in pot*": 6,
+                    "add fish to dish": 2
+                },
+                {
+                    "cook rice in pot*": [
+                        "pick rice"
+                    ],
+                    "add rice to dish": [
+                        "cook rice in pot*",
+                        "wash dish"
+                    ],
+                    "add nori_seaweed to dish": [
+                        "wash dish",
+                        "pick nori_seaweed"
+                    ],
+                    "cook fish in pot*": [
+                        "pick fish"
+                    ],
+                    "add fish to dish": [
+                        "cook fish in pot*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking10": [
+                {
+                    "pick beef": 1,
+                    "chop beef": 4,
+                    "cook beef in pot*": 6,
+                    "add beef to dish": 2,
+                    "pick tomato": 2,
+                    "chop tomato": 2,
+                    "fry tomato in fryer*": 5,
+                    "add tomato to dish": 2,
+                    "wash dish": 1
+                },
+                {
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "cook beef in pot*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "cook beef in pot*",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "fry tomato in fryer*": [
+                        "chop tomato"
+                    ],
+                    "add tomato to dish": [
+                        "fry tomato in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 8,
+        "tasks": [
+            "cooking9",
+            "cooking10",
+            "cooking1"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare a dish of rice topped with Nori seaweed and cooked fish.**\n**Task Prepare beef and tomato stir-fry, which consists of cooked beef and fried tomato.**\n**Task Make a dish of beef fried rice, which consists of cooked rice and fried beef.**\nValid Actions with time required for completion:\n- wash dish: 3 minutes\n- pick rice: 1 minutes\n- cook rice in pot: 5 minutes\n- add rice to dish: 3 minutes\n- pick nori_seaweed: 2 minutes\n- add nori_seaweed to dish: 1 minutes\n- pick fish: 1 minutes\n- cook fish in pot: 6 minutes\n- add fish to dish: 2 minutes\n- pick beef: 1 minutes\n- chop beef: 4 minutes\n- cook beef in pot: 6 minutes\n- add beef to dish: 2 minutes\n- pick tomato: 2 minutes\n- chop tomato: 2 minutes\n- fry tomato in fryer: 5 minutes\n- add tomato to dish: 2 minutes\n- wash dish: 1 minutes\n- wash dish: 3 minutes\n- pick rice: 2 minutes\n- pick beef: 2 minutes\n- cook rice in pot: 4 minutes\n- add rice to dish: 2 minutes\n- chop beef: 3 minutes\n- fry beef in fryer: 5 minutes\n- add beef to dish: 2 minutes\n",
+        "dependency_graph": {
+            "cooking9": [
+                {
+                    "wash dish": 3,
+                    "pick rice": 1,
+                    "cook rice in pot*": 5,
+                    "add rice to dish": 3,
+                    "pick nori_seaweed": 2,
+                    "add nori_seaweed to dish": 1,
+                    "pick fish": 1,
+                    "cook fish in pot*": 6,
+                    "add fish to dish": 2
+                },
+                {
+                    "cook rice in pot*": [
+                        "pick rice"
+                    ],
+                    "add rice to dish": [
+                        "cook rice in pot*",
+                        "wash dish"
+                    ],
+                    "add nori_seaweed to dish": [
+                        "wash dish",
+                        "pick nori_seaweed"
+                    ],
+                    "cook fish in pot*": [
+                        "pick fish"
+                    ],
+                    "add fish to dish": [
+                        "cook fish in pot*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking10": [
+                {
+                    "pick beef": 1,
+                    "chop beef": 4,
+                    "cook beef in pot*": 6,
+                    "add beef to dish": 2,
+                    "pick tomato": 2,
+                    "chop tomato": 2,
+                    "fry tomato in fryer*": 5,
+                    "add tomato to dish": 2,
+                    "wash dish": 1
+                },
+                {
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "cook beef in pot*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "cook beef in pot*",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "fry tomato in fryer*": [
+                        "chop tomato"
+                    ],
+                    "add tomato to dish": [
+                        "fry tomato in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking1": [
+                {
+                    "wash dish": 3,
+                    "pick rice": 2,
+                    "pick beef": 2,
+                    "cook rice in pot*": 4,
+                    "add rice to dish": 2,
+                    "chop beef": 3,
+                    "fry beef in fryer*": 5,
+                    "add beef to dish": 2
+                },
+                {
+                    "cook rice in pot*": [
+                        "pick rice"
+                    ],
+                    "add rice to dish": [
+                        "cook rice in pot*",
+                        "wash dish"
+                    ],
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "fry beef in fryer*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "fry beef in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "id": 9,
+        "tasks": [
+            "cooking10",
+            "cooking1",
+            "cooking2"
+        ],
+        "query": "As an AI agent, your objective is to efficiently complete a series of tasks as described. You must adhere to the specific requirements and constraints of each task, including dependencies and timing. Efficiency is key; complete all tasks in the shortest possible time. I will provide instructions regarding actions and objects.\n**Action Protocol**:\n - You can perform only one action at a time-step/minute.\n - At each time-step, i.e., after EVERY MINUTE, output a valid action.\n - You need to figure out the dependencies amongst the actions and output the actions in correct order and timings for them to be valid.\n - Output the action explicitly and do not add other symbols (e.g., wash cup).\n - Actions fall into two types:\n    - Type 1: Action occupies you until completion (e.g., wash OBJ).\n    - Type 2: Action lets you be idle, allowing to perform other actions (e.g., heat OBJ).\n - Follow the \"Valid Actions\" for your output (e.g., wash cup).\n - If no action is required, use \"wait\" to skip the current time.\n - Output the full sequence of actions in a numbered sequence, starting from '0:' indicating the minute/time step the action is taken, seperated by newlines and enclosed with the tags <ANSWER></ANSWER>.\n - Example output: \"<ANSWER>\n0: wash cup\n1: wait\n2: wash bedsheet\n...(and so on)\n</ANSWER>\"\n - While doing an action, you can output the action at the start of the minute/time-step and then wait for the next minute/time-step to output the next action if it as an idle action or takes 1 minute to complete, otherwise you have to do 'wait' actions in subsequent time-steps till the action is complete before outputting the next action.\nThe maximum time allowed for completing all tasks is 120 minutes. Please cutoff you answer at the completion of all tasks or before this maximum limit. Note that this time limit is always higher than actually required time.Tasks:\n**Task Prepare beef and tomato stir-fry, which consists of cooked beef and fried tomato.**\n**Task Make a dish of beef fried rice, which consists of cooked rice and fried beef.**\n**Task Prepare a noodle dish, which consists of cooked noodle, fried mushrooms and shrimp.**\nValid Actions with time required for completion:\n- pick beef: 1 minutes\n- chop beef: 4 minutes\n- cook beef in pot: 6 minutes\n- add beef to dish: 2 minutes\n- pick tomato: 2 minutes\n- chop tomato: 2 minutes\n- fry tomato in fryer: 5 minutes\n- add tomato to dish: 2 minutes\n- wash dish: 1 minutes\n- wash dish: 3 minutes\n- pick rice: 2 minutes\n- pick beef: 2 minutes\n- cook rice in pot: 4 minutes\n- add rice to dish: 2 minutes\n- chop beef: 3 minutes\n- fry beef in fryer: 5 minutes\n- add beef to dish: 2 minutes\n- wash dish: 3 minutes\n- pick noodle: 1 minutes\n- cook noodle in pot: 5 minutes\n- add noodle to dish: 2 minutes\n- pick mushroom: 2 minutes\n- chop mushroom: 3 minutes\n- fry mushroom in fryer: 2 minutes\n- add mushroom to dish: 2 minutes\n- pick shrimp: 1 minutes\n- chop shrimp: 2 minutes\n- fry shrimp in fryer: 4 minutes\n- add shrimp to dish: 2 minutes\n",
+        "dependency_graph": {
+            "cooking10": [
+                {
+                    "pick beef": 1,
+                    "chop beef": 4,
+                    "cook beef in pot*": 6,
+                    "add beef to dish": 2,
+                    "pick tomato": 2,
+                    "chop tomato": 2,
+                    "fry tomato in fryer*": 5,
+                    "add tomato to dish": 2,
+                    "wash dish": 1
+                },
+                {
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "cook beef in pot*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "cook beef in pot*",
+                        "wash dish"
+                    ],
+                    "chop tomato": [
+                        "pick tomato"
+                    ],
+                    "fry tomato in fryer*": [
+                        "chop tomato"
+                    ],
+                    "add tomato to dish": [
+                        "fry tomato in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking1": [
+                {
+                    "wash dish": 3,
+                    "pick rice": 2,
+                    "pick beef": 2,
+                    "cook rice in pot*": 4,
+                    "add rice to dish": 2,
+                    "chop beef": 3,
+                    "fry beef in fryer*": 5,
+                    "add beef to dish": 2
+                },
+                {
+                    "cook rice in pot*": [
+                        "pick rice"
+                    ],
+                    "add rice to dish": [
+                        "cook rice in pot*",
+                        "wash dish"
+                    ],
+                    "chop beef": [
+                        "pick beef"
+                    ],
+                    "fry beef in fryer*": [
+                        "chop beef"
+                    ],
+                    "add beef to dish": [
+                        "fry beef in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ],
+            "cooking2": [
+                {
+                    "wash dish": 3,
+                    "pick noodle": 1,
+                    "cook noodle in pot*": 5,
+                    "add noodle to dish": 2,
+                    "pick mushroom": 2,
+                    "chop mushroom": 3,
+                    "fry mushroom in fryer*": 2,
+                    "add mushroom to dish": 2,
+                    "pick shrimp": 1,
+                    "chop shrimp": 2,
+                    "fry shrimp in fryer*": 4,
+                    "add shrimp to dish": 2
+                },
+                {
+                    "cook noodle in pot*": [
+                        "pick noodle"
+                    ],
+                    "add noodle to dish": [
+                        "cook noodle in pot*",
+                        "wash dish"
+                    ],
+                    "chop mushroom": [
+                        "pick mushroom"
+                    ],
+                    "fry mushroom in fryer*": [
+                        "chop mushroom"
+                    ],
+                    "add mushroom to dish": [
+                        "fry mushroom in fryer*",
+                        "wash dish"
+                    ],
+                    "chop shrimp": [
+                        "pick shrimp"
+                    ],
+                    "fry shrimp in fryer*": [
+                        "chop shrimp"
+                    ],
+                    "add shrimp to dish": [
+                        "fry shrimp in fryer*",
+                        "wash dish"
+                    ]
+                }
+            ]
+        }
+    }
+]
