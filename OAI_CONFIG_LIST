@@ -1,0 +1,30 @@
+[
+    {
+        "model": "gpt-4o",
+        "api_key":"ENTER_OPENAI_API_KEY",
+        "seed": 42,
+        "temperature": 0.01,
+        "tags": ["gpt-4o", "openai", "personal"]
+    },
+    {
+        "model": "o3-mini",
+        "api_key":"ENTER_OPENAI_API_KEY",
+        "seed": 42,
+        "price": [0.0011, 0.0044],
+        "tags": ["o3-mini", "openai", "personal"]
+    },
+    {
+        "model": "deepseek-chat",
+        "api_key":"ENTER_DEEPSEEK_API_KEY",
+        "base_url": "https://api.deepseek.com/v1",
+        "tags": ["deepseek-chat", "personal"],
+        "price": [0.00027, 0.0011]
+    },
+    {
+        "model": "deepseek-reasoner",
+        "api_key":"ENTER_DEEPSEEK_API_KEY",
+        "base_url": "https://api.deepseek.com/v1",
+        "tags": ["deepseek-reasoner", "personal"],
+        "price": [0.00055, 0.00219]
+    }
+]
