@@ -7,7 +7,7 @@ LRPlan is a multi-agent architecture designed to solve complex real-world planni
 
 ![LRPlan Architecture](LRPlan_Architecture.png))
 
-![LRPlan: TravelPlanner Case](LRPlan_TravelPlanningCase.pdf)
+![LRPlan: TravelPlanner Case](LRPlan_TravelPlannerCase.png)
 
 ## Setup
 1. Create a conda environment and install dependencies:
