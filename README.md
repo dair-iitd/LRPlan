@@ -1,5 +1,14 @@
 # LRPlan
 
+This is the official repository for the EMNLP 2025 Findings paper:
+<br>**LRPLAN: A Multi-Agent Collaboration of Large Language and Reasoning Models for Planning with Implicit & Explicit Constraints**
+
+LRPlan is a multi-agent architecture designed to solve complex real-world planning problems.
+
+![LRPlan Architecture](LRPlan_Architecture.png))
+
+![LRPlan: TravelPlanner Case](LRPlan_TravelPlanningCase.pdf)
+
 ## Setup
 1. Create a conda environment and install dependencies:
 ```bash
